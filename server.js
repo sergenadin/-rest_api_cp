@@ -1,9 +1,9 @@
 // Import necessary modules
-import express from "express";
-import mongoose from "mongoose";
-import User from "./models/User.js"; // Adjust the path based on your project structure
-import cors from "cors";
-import "dotenv/config.js";
+const express = require("express");
+const mongoose = require("mongoose");
+const User = require("./models/User"); // Utilisez require pour importer le module User
+const cors = require("cors");
+require("dotenv/config");
 
 // Set up Express app and enable CORS
 const app = express();
@@ -11,14 +11,17 @@ app.use(cors()); // Enable CORS for all routes
 app.use(express.json());
 
 // Set the port from environment variable or default to 5000
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 
 // Connect to MongoDB
-mongoose.connect(process.env.DB_URL, {
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
-});
+// mongoose.connect(process.env.DB_URL)
 
+
+// Connexion à la base de données MongoDB
+mongoose
+  .connect(process.env.DB_URL)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error(err));
 // GET: Return all users
 app.get("/users", async (req, res) => {
 	try {
